@@ -6,6 +6,8 @@ public class Menus {
     public static String menuPrincipal(){
         Scanner scanner = new Scanner(System.in);
         System.out.print("""
+                **************************************************
+                                     Menú de usuario
                 1. Mostrar mi perfil
                 2. Cambiar mis datos personales
                 3. Ver mis productos en venta
@@ -20,10 +22,14 @@ public class Menus {
     }
     public static String menuInicio(){
         Scanner scanner = new Scanner(System.in);
-        System.out.println("""
+        System.out.print("""
+                Bienvenido al programa FernanPop
+                Compra y vende tus artículos en nuestro Centro
+                ===================================================
                 1. Iniciar sesión
                 2. Registrarse
-                3. SaliIntroduce la opción deseada:\s""");
+                3. Salir
+                Introduce la opción deseada:\s""");
         return scanner.nextLine();
     }
 }
