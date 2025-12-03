@@ -4,6 +4,7 @@ public class Usuario {
     private String email;
     private String clave;
     private String nombre;
+    private int id;
     private static int contadorUsuarios = 0;
 //Getters y Setters
     public String getEmail() {
@@ -29,6 +30,10 @@ public class Usuario {
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
+
+    public int getId() {
+        return id;
+    }
     //Constructor
 
     public Usuario(String email, String clave, String nombre) {
@@ -36,6 +41,7 @@ public class Usuario {
         this.clave = clave;
         this.nombre = nombre;
         contadorUsuarios++;
+        id = contadorUsuarios;
     }
 
     public static int getContadorUsuarios() {
@@ -51,5 +57,17 @@ public class Usuario {
             if (usuario.charAt(i) == '@') return true;
         }
         return false;
+    }
+
+    //toString Provisional
+    //En el futuro se mejorara
+    @Override
+    public String toString() {
+        return "Usuario{" +
+                "email='" + email + '\'' +
+                ", clave='" + clave + '\'' +
+                ", nombre='" + nombre + '\'' +
+                ", id=" + id +
+                '}';
     }
 }
