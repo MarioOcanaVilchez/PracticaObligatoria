@@ -12,9 +12,11 @@ public class FernanPop {
         String op, opInicio, clave, usuario, nombre;
         int usuarioInicio = 0;
         boolean sesionIniciada;
-        //Utilidades.AnimacionIniciando();
         Usuario usuario1 = null;
         Usuario usuario2 = null;
+
+        //Animación de entrada a la app
+        Utilidades.AnimacionIniciando();
         //Menu para seleccionar el usuario
         do {
             do {
