@@ -4,7 +4,7 @@ public class Usuario {
     private String email;
     private String clave;
     private String nombre;
-    private int id;
+    private final int id;
     private static int contadorUsuarios = 0;
 //Getters y Setters
     public String getEmail() {
@@ -12,7 +12,7 @@ public class Usuario {
     }
 
     public void setEmail(String email) {
-        this.email = email;
+        if (validarUsuario(email)) this.email = email;
     }
 
     public String getClave() {
@@ -35,7 +35,6 @@ public class Usuario {
         return id;
     }
     //Constructor
-
     public Usuario(String email, String clave, String nombre) {
         this.email = email;
         this.clave = clave;
@@ -57,6 +56,18 @@ public class Usuario {
             if (usuario.charAt(i) == '@') return true;
         }
         return false;
+    }
+    public boolean validarExistenciaCorreo(String correo){
+        return correo.equals(this.email);
+    }
+    public boolean validarConfirmacionDeClave(String clave,String claveConf){
+        return clave.equals(claveConf) && !clave.equals(this.clave);
+    }
+    public boolean validarExistenciaClave(String clave){
+        return clave.equals(this.clave);
+    }
+    public boolean validarExistenciaNombre(String nombre){
+        return nombre.equals(this.nombre);
     }
 
     //toString Provisional

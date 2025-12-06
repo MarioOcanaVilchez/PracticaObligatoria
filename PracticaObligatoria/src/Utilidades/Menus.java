@@ -32,4 +32,17 @@ public class Menus {
                 Introduce la opción deseada:\s""");
         return scanner.nextLine();
     }
+    public static String menuCambiarDatos(){
+        Scanner scanner = new Scanner(System.in);
+            System.out.print("""
+            ********************************************************
+                                  Datos a cambiar
+            1. Correo
+            2. Clave
+            3. Nombre
+            4. Volver al menu principal
+            Introduce la opción deseada:\s
+            """);
+            return scanner.nextLine();
+    }
 }
