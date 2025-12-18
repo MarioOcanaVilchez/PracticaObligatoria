@@ -1,4 +1,5 @@
 package Vistas;
+import Modelos.Fernanpop;
 import Modelos.Productos;
 import Modelos.Usuario;
 import Utilidades.Utilidades;
@@ -12,15 +13,18 @@ public class FernanPop {
         Scanner scanner = new Scanner(System.in);
         String op, opInicio, clave, usuario, nombre, opCambiarDatos,claveConf,nombreP,descripcion,precioSinValidar;
         double precio;
+        Usuario uTemp;
         boolean continuar;
-        int usuarioInicio = 0;
         boolean sesionIniciada;
-        Usuario usuario1 = null;
-        Usuario usuario2 = null;
-        Productos p1u1 = null;
-        Productos p2u1 = null;
-        Productos p1u2 = null;
-        Productos p2u2 = null;
+        Fernanpop fernanpop = new Fernanpop();
+
+        //MOCK
+        fernanpop.crearUser("Prueba1@","1234","Sujeto de pruebas");
+        fernanpop.crearUser("Prueba2@","1234","Sujeto de pruebas2");
+        uTemp = fernanpop.devuelveUsuario("Prueba1@","1234");
+        uTemp.crearProducto("Gafas de sol","Buenas contra el sol", 19.99,uTemp);
+        uTemp = null;
+        //Fin MOCK
 
         //Animación de entrada a la app
         Utilidades.AnimacionIniciando();
@@ -36,21 +40,18 @@ public class FernanPop {
 
                         System.out.print("Introduce la clave: ");
                         clave = scanner.nextLine();
-                        if (usuario1 != null && usuario1.validarUsuario(usuario, clave)) {
+                        //usuario1= UsuairoData.usuario1();
+                        if (fernanpop.buscarUser(usuario, clave)){
+                            uTemp = fernanpop.devuelveUsuario(usuario,clave);
+                            System.out.println("Bienvenido " + uTemp.getNombre());
                             sesionIniciada = true;
-                            System.out.println("Bienvenido " + usuario1.getNombre());
-                            usuarioInicio = usuario1.getId();
-                        } else if (usuario2 != null && usuario2.validarUsuario(usuario, clave)) {
-                            sesionIniciada = true;
-                            System.out.println("Bienvenido " + usuario2.getNombre());
-                            usuarioInicio = usuario2.getId();
                         } else System.out.println("ERROR usuario o clave incorrectas");
                         break;
                     case "2"://Registrarse
                         if (Usuario.getContadorUsuarios() < 2) {
                             System.out.print("Introduce el correo: ");
                             usuario = scanner.nextLine();
-                            if (usuario1 != null && usuario.equals(usuario1.getEmail())) {
+                            if (fernanpop.usuarioReguistrado(usuario)) {
                                 System.out.println("Correo ya registrado");
                             } else {
                                 if (Usuario.validarUsuario(usuario)) {
@@ -58,8 +59,7 @@ public class FernanPop {
                                     clave = scanner.nextLine();
                                     System.out.print("Introduce tu nombre: ");
                                     nombre = scanner.nextLine();
-                                    if (usuario1 == null) usuario1 = new Usuario(usuario, clave, nombre);
-                                    else if (usuario2 == null) usuario2 = new Usuario(usuario, clave, nombre);
+                                    fernanpop.crearUser(usuario,clave,nombre);
                                 } else {
                                     System.out.println("Usuario no válido");
                                 }
@@ -81,201 +81,113 @@ public class FernanPop {
                 do {
                     //Menu para las funcionalidades del programa
                     op = Menus.menuPrincipal();
-                    Utilidades.limpiarPantalla();
                     switch (op) {
                         case "1":
-                            switch (usuarioInicio) {
-                                case 1:
-                                    System.out.println(usuario1);
-                                    break;
-                                case 2:
-                                    System.out.println(usuario2);
-                            }
+                            System.out.println(uTemp);
                             break;
                         case "2":
                             do {
                                 opCambiarDatos = Menus.menuCambiarDatos();
-                                switch (usuarioInicio) {
-                                    case 1:
-                                        switch (opCambiarDatos) {
-                                            case "1":
-                                                System.out.print("Introduce tu nuevo correo: ");
-                                                usuario = scanner.nextLine();
-                                                if (Usuario.validarUsuario(usuario)) {
-                                                    if (usuario1.validarExistenciaCorreo(usuario)) {
-                                                        System.out.println("El nuevo correo es el mismo que el antiguo");
-                                                    } else {
-                                                        System.out.println("Correo actualizado");
-                                                        usuario1.setEmail(usuario);
-                                                    }
-                                                } else {
-                                                    System.out.println("Error correo no existente");
-                                                }
-                                                break;
-                                            case "2":
-                                                System.out.print("Introduce tu nueva clave: ");
-                                                clave = scanner.nextLine();
-                                                if (usuario1.validarExistenciaClave(clave))
-                                                    System.out.println("La nueva clave no puede ser igual a la antigua");
-                                                else {
-                                                    System.out.print("Introduce la clave otra vez clave: ");
-                                                    claveConf = scanner.nextLine();
-                                                    if (usuario1.validarConfirmacionDeClave(clave, claveConf)) {
-                                                        usuario1.setClave(clave);
-                                                        System.out.println("Clave actualizada");
-                                                    } else System.out.println("Error");
-                                                }
-                                                break;
-                                            case "3":
-                                                System.out.print("Introduce tu nuevo nombre: ");
-                                                nombre = scanner.nextLine();
-                                                if (usuario1.validarExistenciaNombre(nombre))
-                                                    System.out.println("El nombre no puede ser el mismo al anterior");
-                                                else {
-                                                    usuario1.setNombre(nombre);
-                                                    System.out.println("Nombre actualizado con éxito");
-                                                }
-                                                break;
+                                switch (opCambiarDatos) {
+                                    case "1":
+                                        System.out.print("Introduce tu nuevo correo: ");
+                                        usuario = scanner.nextLine();
+                                        if (Usuario.validarUsuario(usuario)) {
+                                            if (uTemp.validarExistenciaCorreo(usuario)) {
+                                                System.out.println("El nuevo correo es el mismo que el antiguo");
+                                            } else {
+                                                System.out.println("Correo actualizado");
+                                                uTemp.setEmail(usuario);
+                                            }
+                                        } else {
+                                            System.out.println("Error correo no existente");
                                         }
                                         break;
-                                    case 2:
-                                        if (usuario2 != null) {
-                                            switch (opCambiarDatos) {
-                                                case "1":
-                                                    System.out.print("Introduce tu nuevo correo: ");
-                                                    usuario = scanner.nextLine();
-                                                    if (Usuario.validarUsuario(usuario)) {
-                                                        if (usuario2.validarExistenciaCorreo(usuario)) {
-                                                            System.out.println("El nuevo correo es el mismo que el antiguo");
-                                                        } else {
-                                                            System.out.println("Correo actualizado");
-                                                            usuario2.setEmail(usuario);
-                                                        }
-                                                    } else {
-                                                        System.out.println("Error correo no existente");
-                                                    }
-                                                    break;
-                                                case "2":
-                                                    System.out.print("Introduce tu nueva clave: ");
-                                                    clave = scanner.nextLine();
-                                                    if (usuario2.validarExistenciaClave(clave))
-                                                        System.out.println("La nueva clave no puede ser igual a la antigua");
-                                                    else {
-                                                        System.out.print("Introduce la clave otra vez clave: ");
-                                                        claveConf = scanner.nextLine();
-                                                        if (usuario2.validarConfirmacionDeClave(clave, claveConf)) {
-                                                            usuario2.setClave(clave);
-                                                            System.out.println("Clave actualizada");
-                                                        } else System.out.println("Error");
-                                                    }
-                                                    break;
-                                                case "3":
-                                                    System.out.print("Introduce tu nuevo nombre: ");
-                                                    nombre = scanner.nextLine();
-                                                    if (usuario2.validarExistenciaNombre(nombre))
-                                                        System.out.println("El nombre no puede ser el mismo al anterior");
-                                                    else {
-                                                        usuario2.setNombre(nombre);
-                                                        System.out.println("Nombre actualizado con éxito");
-                                                    }
-                                                    break;
-                                            }
-                                            break;
+                                    case "2":
+                                        System.out.print("Introduce tu nueva clave: ");
+                                        clave = scanner.nextLine();
+                                        if (uTemp.validarExistenciaClave(clave))
+                                            System.out.println("La nueva clave no puede ser igual a la antigua");
+                                        else {
+                                            System.out.print("Introduce la clave otra vez clave: ");
+                                            claveConf = scanner.nextLine();
+                                            if (uTemp.validarConfirmacionDeClave(clave, claveConf)) {
+                                                uTemp.setClave(clave);
+                                                System.out.println("Clave actualizada");
+                                            } else System.out.println("Error");
                                         }
-                                        if (!opCambiarDatos.equals("4")) {
+                                        break;
+                                    case "3":
+                                        System.out.print("Introduce tu nuevo nombre: ");
+                                        nombre = scanner.nextLine();
+                                        if (uTemp.validarExistenciaNombre(nombre)) System.out.println("El nombre no puede ser el mismo al anterior");
+                                        else {
+                                            uTemp.setNombre(nombre);
+                                            System.out.println("Nombre actualizado con éxito");
+                                        }
+                                        break;
+                                    case "4":
+                                        System.out.println("Volviendo al menú principal");
+                                        break;
+                                    default:
+                                        System.out.println("Opción no existente");
+                                        }
+                                        if (!opCambiarDatos.equals("4")){
                                             Utilidades.pulsaParaContinuar();
                                             Utilidades.limpiarPantalla();
                                         }
-                                }
+
                             } while (!opCambiarDatos.equals("4")) ;
                             break;
                         case "3":
-                            System.out.println("z");
+                            if (uTemp.getP1() != null) System.out.println(uTemp.getP1());
+                            if (uTemp.getP2() != null) System.out.println(uTemp.getP2());
                             break;
                         case "4":
-                            System.out.println();
+                            if (uTemp.hayProductosEnVenta()){
+                                System.out.println("Selecciona artículo a eliminar de en venta con esta opción se eliminara el objeto");
+                                System.out.println("1. " + uTemp.getP1().getNombre());
+                                if (uTemp.getP2() != null) System.out.println("2. " + uTemp.getP2().getNombre());
+                                System.out.println("3. Salir");
+                                System.out.println("Selecciona: ");
+                                    nombre = scanner.nextLine();
+                                    switch (nombre) {
+                                        case "1","2":
+                                            if (uTemp.eliminarProducto(nombre)) System.out.println("Artículo eliminado de ventas");
+                                            else System.out.println("Opción no existente");
+                                            break;
+                                        case "3":
+                                            break;
+                                        default:
+                                            System.out.println("Opción no existente");
+                                    }
+                            } else System.out.println("No hay artículos a la venta");
                             break;
                         case "5":
-                            switch (usuarioInicio){
-                                case 1:
-                                    if (p1u1 == null){
-                                        System.out.print("Introduce el nombre del producto: ");
-                                        nombreP = scanner.nextLine();
-                                        System.out.print("Introduce una descripción del producto: ");
-                                        descripcion = scanner.nextLine();
-                                        continuar = false;
-                                        do {
-                                            System.out.print("Introduce un precio al producto: ");
-                                            precioSinValidar = scanner.nextLine();
-                                            if (!Productos.validarPrecio(precioSinValidar)) {
-                                                System.out.println("Precio no válido");
-                                            } else {
-                                                continuar = true;
-                                                precio = Double.parseDouble(precioSinValidar);
-                                                p1u1 = new Productos(nombreP,descripcion,precio,usuario1);
-                                            }
-                                        }while (!continuar);
+                            if (uTemp.cojeProducto()){
+                                System.out.print("Introduce el nombre del producto: ");
+                                nombreP = scanner.nextLine();
+                                System.out.print("Introduce una descripción del producto: ");
+                                descripcion = scanner.nextLine();
+                                continuar = false;
+                                do {
+                                    System.out.print("Introduce un precio al producto: ");
+                                    precioSinValidar = scanner.nextLine();
+                                    if (!Productos.validarPrecio(precioSinValidar)) {
+                                        System.out.println("Precio no válido");
                                     } else {
-                                        if (p2u1 == null){
-                                            System.out.print("Introduce el nombre del producto: ");
-                                            nombreP = scanner.nextLine();
-                                            System.out.print("Introduce una descripción del producto: ");
-                                            descripcion = scanner.nextLine();
-                                            continuar = false;
-                                            do {
-                                                System.out.print("Introduce un precio al producto: ");
-                                                precioSinValidar = scanner.nextLine();
-                                                if (!Productos.validarPrecio(precioSinValidar)) {
-                                                    System.out.println("Precio no válido");
-                                                } else {
-                                                    continuar = true;
-                                                    precio = Double.parseDouble(precioSinValidar);
-                                                    p2u1 = new Productos(nombreP,descripcion,precio,usuario1);
-                                                }
-                                            }while (!continuar);
-                                        } else System.out.println("Número de productos máximo alcanzado");
+                                        continuar = true;
+                                        precio = Double.parseDouble(precioSinValidar);
+                                        uTemp.crearProducto(nombreP,descripcion,precio,uTemp);
                                     }
-                                    break;
-                                case 2:
-                                    if (p1u2 == null){
-                                        System.out.print("Introduce el nombre del producto: ");
-                                        nombreP = scanner.nextLine();
-                                        System.out.print("Introduce una descripción del producto: ");
-                                        descripcion = scanner.nextLine();
-                                        continuar = false;
-                                        do {
-                                            System.out.print("Introduce un precio al producto: ");
-                                            precioSinValidar = scanner.nextLine();
-                                            if (!Productos.validarPrecio(precioSinValidar)) {
-                                                System.out.println("Precio no válido");
-                                            } else {
-                                                continuar = true;
-                                                precio = Double.parseDouble(precioSinValidar);
-                                                p1u2 = new Productos(nombreP,descripcion,precio,usuario2);
-                                            }
-                                        }while (!continuar);
-                                    } else {
-                                        if (p2u2 == null){
-                                            System.out.print("Introduce el nombre del producto: ");
-                                            nombreP = scanner.nextLine();
-                                            System.out.print("Introduce una descripción del producto: ");
-                                            descripcion = scanner.nextLine();
-                                            continuar = false;
-                                            do {
-                                                System.out.print("Introduce un precio al producto: ");
-                                                precioSinValidar = scanner.nextLine();
-                                                if (!Productos.validarPrecio(precioSinValidar)) {
-                                                    System.out.println("Precio no válido");
-                                                } else {
-                                                    continuar = true;
-                                                    precio = Double.parseDouble(precioSinValidar);
-                                                    p2u2 = new Productos(nombreP,descripcion,precio,usuario2);
-                                                }
-                                            }while (!continuar);
-                                        } else System.out.println("Número de productos máximo alcanzado");
-                                    }
-                                    break;
-                            }
+                                }while (!continuar);
+                            } else System.out.println("Tienes demasiados productos");
+                            break;
+                        case "6":
+                            System.out.println(fernanpop.pintaTodosLosProductos());
+                            break;
+                        case "7","8":
+                            System.out.println("Sin hacer todavía");
                             break;
                         case "9":
                             break;
@@ -287,6 +199,7 @@ public class FernanPop {
                         Utilidades.limpiarPantalla();
                     }
                 } while (!op.equals("9"));
+                uTemp = null;
             }
             if (!opInicio.equals("3")) Utilidades.limpiarPantalla();
         }while (!opInicio.equals("3"));

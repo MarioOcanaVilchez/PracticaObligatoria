@@ -6,6 +6,9 @@ public class Usuario {
     private String nombre;
     private final int id;
     private static int contadorUsuarios = 0;
+    private Productos p1;
+    private Productos p2;
+    private int contProductosEnVenta;
 //Getters y Setters
     public String getEmail() {
         return email;
@@ -31,6 +34,22 @@ public class Usuario {
         this.nombre = nombre;
     }
 
+    public Productos getP1() {
+        return p1;
+    }
+
+    public void setP1(Productos p1) {
+        this.p1 = p1;
+    }
+
+    public Productos getP2() {
+        return p2;
+    }
+
+    public void setP2(Productos p2) {
+        this.p2 = p2;
+    }
+
     public int getId() {
         return id;
     }
@@ -40,7 +59,10 @@ public class Usuario {
         this.clave = clave;
         this.nombre = nombre;
         contadorUsuarios++;
+        contProductosEnVenta = 0;
         id = contadorUsuarios;
+        p1 = null;
+        p2 = null;
     }
 
     public static int getContadorUsuarios() {
@@ -69,6 +91,41 @@ public class Usuario {
     public boolean validarExistenciaNombre(String nombre){
         return nombre.equals(this.nombre);
     }
+    public boolean cojeProducto(){
+        return p1 == null || p2 == null;
+    }
+    public void crearProducto(String nombre, String descripcion, double precio,Usuario utemp ){
+        if (p1 == null) {
+            p1 = new Productos(nombre, descripcion, precio, utemp);
+            contProductosEnVenta++;
+        } else if (p2 == null){
+            p2 = new Productos(nombre, descripcion, precio, utemp);
+            contProductosEnVenta++;
+        }
+    }
+    public boolean hayProductosEnVenta(){
+        return contProductosEnVenta > 0;
+    }
+    public boolean eliminarProducto(String num){
+        switch (num){
+            case "1":
+                if (p1 != null) {
+                    p1 = null;
+                    contProductosEnVenta--;
+                    return true;
+                }
+                break;
+            case "2":
+                if (p2 != null) {
+                    p2 = null;
+                    contProductosEnVenta--;
+                    return true;
+                }
+                break;
+
+        }
+        return false;
+    }
 
     //toString Provisional
     //En el futuro se mejorara
@@ -79,6 +136,14 @@ public class Usuario {
                 ", clave='" + clave + '\'' +
                 ", nombre='" + nombre + '\'' +
                 ", id=" + id +
+                ", p1=" + (p1 == null? "\n": p1 + "\n" ) +
+                ", p2=" + (p2 == null? "\n": p2 + "\n" ) +
                 '}';
+    }
+    public String pintaProductos(){
+        String resultado = "";
+        if (p1 != null)  resultado += p1;
+        if (p2 != null)  resultado += p2;
+        return resultado;
     }
 }

@@ -6,9 +6,8 @@ public class Productos {
     private double precio;
     private final int idProducto;
     private static int numProductos = 0;
-    private Usuario vendedor;
+    private final Usuario VENDEDOR;
     private Usuario comprador;
-    private boolean enVenta;
 //Getters y Setters
     public String getNombre() {
         return nombre;
@@ -34,13 +33,6 @@ public class Productos {
         this.precio = precio;
     }
 
-    public boolean isEnVenta() {
-        return enVenta;
-    }
-
-    public void setEnVenta(boolean enVenta) {
-        this.enVenta = enVenta;
-    }
     //Constructor
     public Productos(String nombre, String descripcion, double precio,Usuario vendedor) {
         this.nombre = nombre;
@@ -48,8 +40,7 @@ public class Productos {
         this.precio = precio;
         numProductos++;
         idProducto = numProductos;
-        enVenta = true;
-        this.vendedor = vendedor;
+        this.VENDEDOR = vendedor;
     }
     public static boolean validarPrecio(String precioSinValidar){
         int caracterValido = 0;
@@ -62,5 +53,16 @@ public class Productos {
             }
         }
         return caracterValido == precioSinValidar.length();
+    }
+
+    @Override
+    public String toString() {
+        return "Productos{" +
+                "nombre='" + nombre + '\'' +
+                ", descripcion='" + descripcion + '\'' +
+                ", precio=" + precio +
+                ", idProducto=" + idProducto +
+                //Poner al usuario comprador y vendedor pero no directamente el objeto que peta por retroalimentación
+                '}';
     }
 }
