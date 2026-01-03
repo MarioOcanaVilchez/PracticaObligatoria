@@ -8,7 +8,9 @@ public class Productos {
     private static int numProductos = 0;
     private final Usuario VENDEDOR;
     private Usuario comprador;
-//Getters y Setters
+    private boolean vendido = false;
+
+    //Getters y Setters
     public String getNombre() {
         return nombre;
     }
@@ -55,14 +57,30 @@ public class Productos {
         return caracterValido == precioSinValidar.length();
     }
 
+    public boolean isVendido() {
+        return vendido;
+    }
+
     @Override
     public String toString() {
-        return "Productos{" +
-                "nombre='" + nombre + '\'' +
-                ", descripcion='" + descripcion + '\'' +
-                ", precio=" + precio +
-                ", idProducto=" + idProducto +
-                //Poner al usuario comprador y vendedor pero no directamente el objeto que peta por retroalimentación
-                '}';
+        String estadoVenta = (comprador != null) ? "VENDIDO" : "DISPONIBLE";
+
+        // Formateamos la salida para que sea fácil de escanear en un listado
+        String info = String.format(
+                "=========================================\n" +
+                        "  [P%d] %s (%.2f€) | Estado: %s\n" +
+                        "=========================================\n" +
+                        "  Descripción: %s\n" +
+                        "  Vendedor: %s (Email: %s)\n",
+                this.idProducto, this.nombre, this.precio, estadoVenta,
+                this.descripcion, this.VENDEDOR.getNombre(), this.VENDEDOR.getEmail()
+        );
+
+        // Si está vendido, incluimos el comprador (asumiendo que tiene getters)
+        if (comprador != null) {
+            info += String.format("  Comprador: %s (Email: %s)\n", comprador.getNombre(), comprador.getEmail());
+        }
+
+        return info;
     }
 }
