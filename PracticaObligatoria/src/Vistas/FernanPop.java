@@ -21,8 +21,36 @@ public class FernanPop {
             //MOCK
             fernanpop.crearUser("Prueba1@","1234","Sujeto de pruebas");
             fernanpop.crearUser("Prueba2@","1234","Sujeto de pruebas2");
-            uTemp = fernanpop.devuelveUsuario("Prueba1@","1234");
-            uTemp.crearProducto("Gafas de sol","Buenas contra el sol", 19.99,uTemp);
+
+            // 1. Definir al usuario VENDEDOR
+            Usuario vendedor = fernanpop.devuelveUsuario("Prueba1@","1234");
+            vendedor.crearProducto("Gafas de sol","Buenas contra el sol", 19.99,vendedor);
+            // 2. Definir al usuario COMPRADOR
+            Usuario comprador = fernanpop.devuelveUsuario("Prueba2@","1234");
+            // Mock venta
+            if (vendedor != null && comprador != null && vendedor.getP1() != null) {
+                Productos productoVendido = vendedor.getP1();
+                double precioFinal = 19.00;
+                String fechaVenta = "05/01/2026";
+                int puntuacion = 5;
+                String comentarioVenta = "Producto de excelente calidad. Comprador recomendable.";
+                String comentarioCompra = "Vendedor rápido y formal. Producto en buen estado.";
+
+                productoVendido.setComprador(comprador);
+
+                Transaccion registroVenta = new Transaccion(precioFinal, comprador.getEmail(), puntuacion, comentarioVenta, fechaVenta);
+                vendedor.agregarVenta(registroVenta);
+
+                Transaccion registroCompra = new Transaccion(precioFinal, vendedor.getEmail(), puntuacion, comentarioCompra, fechaVenta);
+                comprador.agregarCompra(registroCompra);
+
+                vendedor.eliminarProducto("1");
+
+                System.out.println("------------------------------------------");
+                System.out.println(">>> MOCK: VENTA DE GAFAS DE SOL EJECUTADA <<<");
+                System.out.println(vendedor.getNombre() + " (Vendedor) y " + comprador.getNombre() + " (Comprador) tienen nuevos registros históricos.");
+                System.out.println("------------------------------------------");
+            }
             uTemp = null;
             //Fin MOCK
 
@@ -208,3 +236,4 @@ public class FernanPop {
             }while (!opInicio.equals("3"));
         }
     }
+
