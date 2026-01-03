@@ -9,7 +9,9 @@ public class Usuario {
     private Productos p1;
     private Productos p2;
     private int contProductosEnVenta;
-//Getters y Setters
+    private Transaccion historicoVenta;
+    private Transaccion historicoCompra;
+    //Getters y Setters
     public String getEmail() {
         return email;
     }
@@ -63,6 +65,8 @@ public class Usuario {
         id = contadorUsuarios;
         p1 = null;
         p2 = null;
+        this.historicoVenta = null;
+        this.historicoCompra = null;
     }
 
     public static int getContadorUsuarios() {
@@ -127,18 +131,46 @@ public class Usuario {
         return false;
     }
 
-    //toString Provisional
-    //En el futuro se mejorara
+    public void agregarVenta(Transaccion venta) {
+        if (this.historicoVenta == null) this.historicoVenta = venta;
+    }
+
+    public void agregarCompra(Transaccion compra) {
+        if (this.historicoCompra == null) this.historicoCompra = compra;
+    }
+
+    public String pintaHistoricoVentas() {
+        if (historicoVenta != null) return "--- Histórico de Ventas ---\n" + historicoVenta.toString();
+        else return "No hay ventas registradas en el histórico.";
+    }
+
+    public String pintaHistoricoCompras() {
+        if (historicoCompra != null) return "--- Histórico de Compras ---\n" + historicoCompra.toString();
+        return "No hay compras registradas en el histórico.";
+    }
+
+
     @Override
     public String toString() {
-        return "Usuario{" +
-                "email='" + email + '\'' +
-                ", clave='" + clave + '\'' +
-                ", nombre='" + nombre + '\'' +
-                ", id=" + id +
-                ", p1=" + (p1 == null? "\n": p1 + "\n" ) +
-                ", p2=" + (p2 == null? "\n": p2 + "\n" ) +
-                '}';
+        String info = String.format(
+                "**************************************************\n" +
+                        "** PERFIL DE USUARIO: %s (ID: %d)\n" +
+                        "**************************************************\n" +
+                        "  Email: %s\n" +
+                        "  Nombre: %s\n",
+                this.nombre, this.id, this.email, this.nombre
+        );
+
+        info += "\n--- PRODUCTOS EN VENTA ---\n";
+        if (contProductosEnVenta == 0) {
+            info += "  (Ningún producto activo en venta)\n";
+        } else {
+            info += pintaProductos();
+        }
+        info += "--------------------------------------------------";
+
+
+        return info;
     }
     public String pintaProductos(){
         String resultado = "";
