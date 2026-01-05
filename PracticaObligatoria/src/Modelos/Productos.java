@@ -35,6 +35,18 @@ public class Productos {
         this.precio = precio;
     }
 
+    public Usuario getComprador() {
+        return comprador;
+    }
+
+    public void setComprador(Usuario comprador) {
+        this.comprador = comprador;
+    }
+
+    public Usuario getVENDEDOR() {
+        return VENDEDOR;
+    }
+
     //Constructor
     public Productos(String nombre, String descripcion, double precio,Usuario vendedor) {
         this.nombre = nombre;
@@ -43,6 +55,7 @@ public class Productos {
         numProductos++;
         idProducto = numProductos;
         this.VENDEDOR = vendedor;
+        this.comprador = null;
     }
     public static boolean validarPrecio(String precioSinValidar){
         int caracterValido = 0;
@@ -61,6 +74,10 @@ public class Productos {
         return vendido;
     }
 
+    public String pintaResumen() {
+        return String.format("  [%d] %s: %.2f€", this.idProducto, this.nombre, this.precio);
+    }
+
     @Override
     public String toString() {
         String estadoVenta = (comprador != null) ? "VENDIDO" : "DISPONIBLE";
@@ -76,11 +93,10 @@ public class Productos {
                 this.descripcion, this.VENDEDOR.getNombre(), this.VENDEDOR.getEmail()
         );
 
-        // Si está vendido, incluimos el comprador (asumiendo que tiene getters)
         if (comprador != null) {
             info += String.format("  Comprador: %s (Email: %s)\n", comprador.getNombre(), comprador.getEmail());
         }
-
         return info;
     }
+
 }
