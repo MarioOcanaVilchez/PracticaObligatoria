@@ -1,5 +1,7 @@
 package Modelos;
 
+import java.time.LocalDate;
+
 public class Fernanpop {
     Usuario u1;
     Usuario u2;
@@ -49,6 +51,39 @@ public class Fernanpop {
         return u2 != null && u2.getEmail().equals(email);
     }
 
+    public Productos devuelveProductoPorId(int idProducto) {
+        if (u1 != null) {
+            if (u1.getP1() != null && u1.getP1().getIdProducto() == idProducto) return u1.getP1();
+            if (u1.getP2() != null && u2.getP2().getIdProducto() == idProducto) return u1.getP2();
+        }
+        if (u2 != null) {
+            if (u2.getP1() != null && u2.getP1().getIdProducto() == idProducto) return u2.getP1();
+            if (u2.getP2() != null && u2.getP2().getIdProducto() == idProducto) return u2.getP2();
+        }
+        return null;
+    }
+
+    public String comprarProducto(Usuario comprador, Productos producto, double precioFinal, int puntuacion, String comentario) {
+        if (comprador.historicoCompra != null) {
+            return "ERROR: Ya tienes un registro de compra. Límite: 1.";
+        }
+        Usuario vendedor = producto.getVENDEDOR();
+        if (vendedor.historicoVenta != null) {
+            return "ERROR: El vendedor ya tiene un registro de venta. Límite: 1.";
+        }
+
+        producto.setComprador(comprador);
+        String fecha = LocalDate.now().toString();
+        Transaccion registroVenta = new Transaccion(precioFinal, comprador.getEmail(), puntuacion, comentario, fecha);
+        vendedor.agregarVenta(registroVenta);
+        Transaccion registroCompra = new Transaccion(precioFinal, vendedor.getEmail(), puntuacion, comentario, fecha);
+        comprador.agregarCompra(registroCompra);
+        if (vendedor.getP1() == producto) vendedor.eliminarProducto("1");
+        else if (vendedor.getP2() == producto) vendedor.eliminarProducto("2");
+        return String.format("COMPRA EXITOSA: Has comprado '%s' por %.2f€.", producto.getNombre(), precioFinal);
+    }
+
+
     @Override
     public String toString() {
         return "Fernanpop{" +
@@ -63,4 +98,3 @@ public class Fernanpop {
         return resultado;
     }
 }
-
