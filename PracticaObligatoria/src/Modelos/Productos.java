@@ -35,6 +35,22 @@ public class Productos {
         this.precio = precio;
     }
 
+    public int getIdProducto() {
+        return idProducto;
+    }
+
+    public static int getNumProductos() {
+        return numProductos;
+    }
+
+    public static void setNumProductos(int numProductos) {
+        Productos.numProductos = numProductos;
+    }
+
+    public Usuario getVENDEDOR() {
+        return VENDEDOR;
+    }
+
     public Usuario getComprador() {
         return comprador;
     }
@@ -43,8 +59,8 @@ public class Productos {
         this.comprador = comprador;
     }
 
-    public Usuario getVENDEDOR() {
-        return VENDEDOR;
+    public void setVendido(boolean vendido) {
+        this.vendido = vendido;
     }
 
     //Constructor
@@ -100,3 +116,4 @@ public class Productos {
     }
 
 }
+
