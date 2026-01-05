@@ -1,58 +1,31 @@
 package Vistas;
 import Modelos.Fernanpop;
 import Modelos.Productos;
+import Modelos.Transaccion;
 import Modelos.Usuario;
 import Utilidades.Utilidades;
 import Utilidades.Menus;
 
 import java.util.Scanner;
 
-public class FernanPop {
+    public class FernanPop {
         public static void main(String[] args){
         //Iniciamos variables del main
             Scanner scanner = new Scanner(System.in);
             String op, opInicio, clave, usuario, nombre, opCambiarDatos,claveConf,nombreP,descripcion,precioSinValidar;
             double precio;
-            Usuario uTemp;
+            Usuario uTemp = null;
             boolean continuar;
             boolean sesionIniciada;
             Fernanpop fernanpop = new Fernanpop();
 
-            //MOCK
-            fernanpop.crearUser("Prueba1@","1234","Sujeto de pruebas");
-            fernanpop.crearUser("Prueba2@","1234","Sujeto de pruebas2");
-
-            // 1. Definir al usuario VENDEDOR
-            Usuario vendedor = fernanpop.devuelveUsuario("Prueba1@","1234");
-            vendedor.crearProducto("Gafas de sol","Buenas contra el sol", 19.99,vendedor);
-            // 2. Definir al usuario COMPRADOR
-            Usuario comprador = fernanpop.devuelveUsuario("Prueba2@","1234");
-            // Mock venta
-            if (vendedor != null && comprador != null && vendedor.getP1() != null) {
-                Productos productoVendido = vendedor.getP1();
-                double precioFinal = 19.00;
-                String fechaVenta = "05/01/2026";
-                int puntuacion = 5;
-                String comentarioVenta = "Producto de excelente calidad. Comprador recomendable.";
-                String comentarioCompra = "Vendedor rápido y formal. Producto en buen estado.";
-
-                productoVendido.setComprador(comprador);
-
-                Transaccion registroVenta = new Transaccion(precioFinal, comprador.getEmail(), puntuacion, comentarioVenta, fechaVenta);
-                vendedor.agregarVenta(registroVenta);
-
-                Transaccion registroCompra = new Transaccion(precioFinal, vendedor.getEmail(), puntuacion, comentarioCompra, fechaVenta);
-                comprador.agregarCompra(registroCompra);
-
-                vendedor.eliminarProducto("1");
-
-                System.out.println("------------------------------------------");
-                System.out.println(">>> MOCK: VENTA DE GAFAS DE SOL EJECUTADA <<<");
-                System.out.println(vendedor.getNombre() + " (Vendedor) y " + comprador.getNombre() + " (Comprador) tienen nuevos registros históricos.");
-                System.out.println("------------------------------------------");
-            }
-            uTemp = null;
-            //Fin MOCK
+//            //MOCK
+//            fernanpop.crearUser("Prueba1@","1234","Sujeto de pruebas");
+//            fernanpop.crearUser("Prueba2@","1234","Sujeto de pruebas2");
+//            Usuario vendedor = fernanpop.devuelveUsuario("Prueba1@","1234");
+//            vendedor.crearProducto("Gafas de sol","Buenas contra el sol", 19.99,vendedor);
+//            Usuario comprador = fernanpop.devuelveUsuario("Prueba2@","1234");
+//            //Fin MOCK
 
             //Animación de entrada a la app
             Utilidades.AnimacionIniciando();
@@ -212,7 +185,58 @@ public class FernanPop {
                                 } else System.out.println("Tienes demasiados productos");
                                 break;
                             case "6":
-                                System.out.println(fernanpop.pintaTodosLosProductos());
+                                //Ver disponibilidad de productos en la app
+                                System.out.println("--- PRODUCTOS DISPONIBLES EN LA APLICACIÓN ---");
+                                String resumenProductos = fernanpop.pintaTodosLosProductos();
+                                if (resumenProductos.isEmpty()) {
+                                    System.out.println("No hay productos disponibles para la venta.");
+                                    break;
+                                }
+                                System.out.println(resumenProductos);
+                                //Aqui se comprueba que el id que has metido sea el de algun producto
+                                String idStr;
+                                int idProducto = -1;
+                                boolean esNumero = false;
+                                do {
+                                    System.out.print("Introduce el ID del producto que deseas ver/comprar (o 0 para salir): ");
+                                    idStr = scanner.nextLine();
+                                    if (Utilidades.validarEntero(idStr)) {
+                                        idProducto = Integer.parseInt(idStr);
+                                        esNumero = true;
+                                    } else {
+                                        System.out.println("ID no válido. Debes introducir solo números.");
+                                    }
+                                } while (!esNumero);
+                                if (idProducto == 0) break;
+                                Productos productoAComprar = fernanpop.devuelveProductoPorId(idProducto);
+                                if (productoAComprar == null) {
+                                    System.out.println("Producto no encontrado o no está a la venta.");
+                                    break;
+                                }
+                                //Cuando metes un id valido te da mas info del producto
+                                System.out.println("\n--- DETALLE DEL PRODUCTO ---\n");
+                                System.out.println(productoAComprar.toString());
+                                if (productoAComprar.getVENDEDOR().getEmail().equals(uTemp.getEmail())) {
+                                    System.out.println("No puedes comprar tu propio producto.");
+                                    break;
+                                }
+                                // Lógica de compra
+                                System.out.print("\n¿Deseas comprar este producto? (s/n): ");
+                                String compraOp = scanner.nextLine();
+                                if (compraOp.equalsIgnoreCase("s")) {
+                                    // Pedir datos de transacción
+                                    System.out.print("Introduce el precio final acordado: ");
+                                    String precioFinalStr = scanner.nextLine();
+                                    double precioFinal = Double.parseDouble(precioFinalStr);
+                                    System.out.print("Introduce tu puntuación (1-5): ");
+                                    int puntuacion = Integer.parseInt(scanner.nextLine());
+                                    System.out.print("Añade un comentario sobre la transacción: ");
+                                    String comentario = scanner.nextLine();
+                                    String resultadoCompra = fernanpop.comprarProducto(uTemp, productoAComprar, precioFinal, puntuacion, comentario);
+                                    System.out.println("\n" + resultadoCompra);
+                                } else {
+                                    System.out.println("Operación de compra cancelada.");
+                                }
                                 break;
                             case "7":
                                 System.out.println(uTemp.pintaHistoricoCompras());
@@ -236,4 +260,5 @@ public class FernanPop {
             }while (!opInicio.equals("3"));
         }
     }
+
 
