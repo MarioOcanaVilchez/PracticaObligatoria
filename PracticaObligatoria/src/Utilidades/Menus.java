@@ -3,7 +3,7 @@ package Utilidades;
 import java.util.Scanner;
 
 public class Menus {
-    public static String menuPrincipal(){
+    public static String menuPrincipal() {
         Scanner scanner = new Scanner(System.in);
         System.out.print("""
                 **************************************************
@@ -20,7 +20,8 @@ public class Menus {
                 Introduce la opción deseada:\s""");
         return scanner.nextLine();
     }
-    public static String menuInicio(){
+
+    public static String menuInicio() {
         Scanner scanner = new Scanner(System.in);
         System.out.print("""
                 Bienvenido al programa FernanPop
@@ -32,18 +33,19 @@ public class Menus {
                 Introduce la opción deseada:\s""");
         return scanner.nextLine();
     }
-    public static String menuCambiarDatos(){
+
+    public static String menuCambiarDatos() {
         Scanner scanner = new Scanner(System.in);
-            System.out.print("""
-            ********************************************************
-                                  Datos a cambiar
-            1. Correo
-            2. Clave
-            3. Nombre
-            4. Volver al menu principal
-            Introduce la opción deseada:\s
-            """);
-            return scanner.nextLine();
+        System.out.print("""
+                ********************************************************
+                                      Datos a cambiar
+                1. Correo
+                2. Clave
+                3. Nombre
+                4. Volver al menu principal
+                Introduce la opción deseada:\s
+                """);
+        return scanner.nextLine();
     }
 }
 
