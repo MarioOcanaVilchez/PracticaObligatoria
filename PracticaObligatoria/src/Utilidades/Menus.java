@@ -14,8 +14,8 @@ public class Menus {
                 4. Cerrar la venta de un producto o quitarlo de la venta
                 5. Poner a la venta un nuevo producto
                 6. Ver todos los productos en venta de la aplicación
-                7. Ver mi histórico de ventas
-                8. Ver mi histórico de compras
+                7. Ver mi histórico de compras
+                8. Ver mi histórico de ventas
                 9. Cerrar sesión
                 Introduce la opción deseada:\s""");
         return scanner.nextLine();
@@ -46,3 +46,4 @@ public class Menus {
             return scanner.nextLine();
     }
 }
+
