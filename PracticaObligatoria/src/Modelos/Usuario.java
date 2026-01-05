@@ -9,8 +9,8 @@ public class Usuario {
     private Productos p1;
     private Productos p2;
     private int contProductosEnVenta;
-    private Transaccion historicoVenta;
-    private Transaccion historicoCompra;
+    Transaccion historicoVenta;
+    Transaccion historicoCompra;
     //Getters y Setters
     public String getEmail() {
         return email;
@@ -196,3 +196,4 @@ public class Usuario {
         return resultado;
     }
 }
+
