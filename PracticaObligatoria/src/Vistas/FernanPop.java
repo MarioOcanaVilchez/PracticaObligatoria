@@ -24,7 +24,6 @@ import java.util.Scanner;
 //            fernanpop.crearUser("Prueba2@","1234","Sujeto de pruebas2");
 //            Usuario vendedor = fernanpop.devuelveUsuario("Prueba1@","1234");
 //            vendedor.crearProducto("Gafas de sol","Buenas contra el sol", 19.99,vendedor);
-//            Usuario comprador = fernanpop.devuelveUsuario("Prueba2@","1234");
 //            //Fin MOCK
 
             //Animación de entrada a la app
@@ -260,5 +259,6 @@ import java.util.Scanner;
             }while (!opInicio.equals("3"));
         }
     }
+
 
 
