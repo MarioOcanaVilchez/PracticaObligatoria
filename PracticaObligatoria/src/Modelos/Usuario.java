@@ -86,18 +86,22 @@ public class Usuario {
     public boolean validarExistenciaCorreo(String correo){
         return correo.equals(this.email);
     }
+
     public boolean validarConfirmacionDeClave(String clave,String claveConf){
         return clave.equals(claveConf) && !clave.equals(this.clave);
     }
     public boolean validarExistenciaClave(String clave){
         return clave.equals(this.clave);
     }
+
     public boolean validarExistenciaNombre(String nombre){
         return nombre.equals(this.nombre);
     }
+
     public boolean cojeProducto(){
         return p1 == null || p2 == null;
     }
+
     public void crearProducto(String nombre, String descripcion, double precio,Usuario utemp ){
         if (p1 == null) {
             p1 = new Productos(nombre, descripcion, precio, utemp);
@@ -107,9 +111,11 @@ public class Usuario {
             contProductosEnVenta++;
         }
     }
+
     public boolean hayProductosEnVenta(){
         return contProductosEnVenta > 0;
     }
+
     public boolean eliminarProducto(String num){
         switch (num){
             case "1":
@@ -149,7 +155,6 @@ public class Usuario {
         return "No hay compras registradas en el histórico.";
     }
 
-
     @Override
     public String toString() {
         String info = String.format(
@@ -161,21 +166,33 @@ public class Usuario {
                 this.nombre, this.id, this.email, this.nombre
         );
 
+        // Añadimos los productos en venta de forma estructurada
         info += "\n--- PRODUCTOS EN VENTA ---\n";
         if (contProductosEnVenta == 0) {
             info += "  (Ningún producto activo en venta)\n";
         } else {
+            // Llama a pintaProductos() para listar p1 y p2
             info += pintaProductos();
         }
         info += "--------------------------------------------------";
 
+        // NOTA: Para no sobrecargar el perfil, no incluiremos aquí los historicosVenta/Compra,
+        // ya que tienen su propia opción de menú (7 y 8).
 
         return info;
     }
+
     public String pintaProductos(){
         String resultado = "";
         if (p1 != null)  resultado += p1;
         if (p2 != null)  resultado += p2;
+        return resultado;
+    }
+
+    public String pintaResumenProductos(){
+        String resultado = "";
+        if (p1 != null)  resultado += p1.pintaResumen() + "\n";
+        if (p2 != null)  resultado += p2.pintaResumen() + "\n";
         return resultado;
     }
 }
