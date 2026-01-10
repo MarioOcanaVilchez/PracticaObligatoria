@@ -32,7 +32,6 @@ public class Utilidades {
             }
         }
     }
-
     public static boolean validarEntero(String str) {
         if (str == null || str.isEmpty()) {
             return false;
@@ -45,4 +44,3 @@ public class Utilidades {
         return true;
     }
 }
-

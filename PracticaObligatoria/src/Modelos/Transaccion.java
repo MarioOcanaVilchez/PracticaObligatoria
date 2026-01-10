@@ -1,69 +1,51 @@
-package practicaObligatoria.Modelos;
+package Modelos;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class Transaccion {
-    private double precioFinal;
-    private String emailSocio;
-    private int puntuacion;
     private String comentario;
-    private String fecha;
+    private LocalDate fecha;
+    private double puntuacion;
+    private Usuario comprador;
+    private Usuario vendedor;
+    private double precio;
+    private Productos producto;
 
-    public Transaccion(double precioFinal, String emailSocio, int puntuacion, String comentario, String fecha) {
-        this.precioFinal = precioFinal;
-        this.emailSocio = emailSocio;
-        this.puntuacion = puntuacion;
+
+    public Transaccion(String comentario, double puntuacion, Usuario comprador,Productos producto) {
         this.comentario = comentario;
-        this.fecha = fecha;
-    }
-
-    public double getPrecioFinal() {
-        return precioFinal;
-    }
-
-    public void setPrecioFinal(double precioFinal) {
-        this.precioFinal = precioFinal;
-    }
-
-    public String getEmailSocio() {
-        return emailSocio;
-    }
-
-    public void setEmailSocio(String emailSocio) {
-        this.emailSocio = emailSocio;
-    }
-
-    public int getPuntuacion() {
-        return puntuacion;
-    }
-
-    public void setPuntuacion(int puntuacion) {
         this.puntuacion = puntuacion;
-    }
-
-    public String getComentario() {
-        return comentario;
-    }
-
-    public void setComentario(String comentario) {
-        this.comentario = comentario;
-    }
-
-    public String getFecha() {
-        return fecha;
-    }
-
-    public void setFecha(String fecha) {
-        this.fecha = fecha;
+        vendedor = producto.getVENDEDOR();
+        this.producto = producto;
+        this.comprador = comprador;
+        precio = producto.getPrecio();
+        fecha = LocalDate.now();
     }
 
     @Override
     public String toString() {
-        return String.format(
-                "  > Fecha: %s\n" +
-                        "  > Precio Final: %.2f€\n" +
-                        "  > Socio Involucrado (Email): %s\n" +
-                        "  > Puntuación Recibida: %d/5\n" +
-                        "  > Comentario: \"%s\"",
-                fecha, precioFinal, emailSocio, puntuacion, comentario
-        );
+        return "Transaccion{" +
+                "comentario='" + comentario + '\'' +
+                ", fecha=" + fecha +
+                ", puntuacion=" + puntuacion +
+                ", comprador=" + comprador +
+                ", vendedor=" + vendedor +
+                ", precio=" + precio +
+                '}';
+    }
+    public String historicoVenta(){
+        return "Producto vendido: " + producto.getNombre() + " " + producto.getPrecio() + "€\n" +
+                "email del comprador: " + comprador.getEmail() + "\n" +
+                "fecha de compra: " + fecha + "\n" +
+                "comentario del comprador: " + comentario + "\n" +
+                "puntuación del comprador: " + puntuacion + "/5\n";
+    }
+    public String historicoCompra(){
+        return "Producto comprado: " + producto.getNombre() + " " + producto.getPrecio() + "€\n" +
+                "email del vendedor: " + vendedor.getEmail() + "\n" +
+                "fecha de compra: " + fecha + "\n" +
+                "comentario: " + comentario + "\n" +
+                "puntuación: " + puntuacion + "/5\n";
     }
 }

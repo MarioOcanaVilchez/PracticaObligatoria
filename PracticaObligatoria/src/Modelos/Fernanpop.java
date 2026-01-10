@@ -1,7 +1,5 @@
 package Modelos;
 
-import java.time.LocalDate;
-
 public class Fernanpop {
     Usuario u1;
     Usuario u2;
@@ -50,39 +48,69 @@ public class Fernanpop {
         if (u1 != null && u1.getEmail().equals(email)) return true;
         return u2 != null && u2.getEmail().equals(email);
     }
-
-    public Productos devuelveProductoPorId(int idProducto) {
-        if (u1 != null) {
-            if (u1.getP1() != null && u1.getP1().getIdProducto() == idProducto) return u1.getP1();
-            if (u1.getP2() != null && u2.getP2().getIdProducto() == idProducto) return u1.getP2();
-        }
-        if (u2 != null) {
-            if (u2.getP1() != null && u2.getP1().getIdProducto() == idProducto) return u2.getP1();
-            if (u2.getP2() != null && u2.getP2().getIdProducto() == idProducto) return u2.getP2();
+    public Productos buscarProducto(Usuario uTemp,String numProducto) {
+        int num = Integer.parseInt(numProducto);
+        int cont = 1;
+        if (uTemp == u1){
+            if (u2.getP1() != null && u2.getP1().getComprador() == null) {
+                if (cont == num) return u2.getP1();
+                else cont++;
+            }
+            if(u2.getP2() != null && u2.getP2().getComprador() == null) {
+                if (cont == num) return u2.getP2();
+                else cont++;
+            }
+            if (u1.getP1() != null && u1.getP1().getComprador() == null) {
+                if (cont == num) return u1.getP1();
+                else cont++;
+            }
+            if (u1.getP2() != null && u1.getP2().getComprador() == null) {
+                if (cont == num) return u1.getP2();
+                else return null;
+            }
+        } else {
+            if (u1.getP1() != null && u1.getP1().getComprador() == null) {
+                if (cont == num) return u1.getP1();
+                else cont++;
+            }
+            if(u1.getP2() != null && u1.getP2().getComprador() == null) {
+                if (cont == num) return u1.getP2();
+                else cont++;
+            }
+            if (u2.getP1() != null && u2.getP1().getComprador() == null) {
+                if (cont == num) return u2.getP1();
+                else cont++;
+            }
+            if (u2.getP2() != null && u2.getP2().getComprador() == null) {
+                if (cont == num) return u2.getP2();
+                else return null;
+            }
         }
         return null;
     }
-
-    public String comprarProducto(Usuario comprador, Productos producto, double precioFinal, int puntuacion, String comentario) {
-        if (comprador.historicoCompra != null) {
-            return "ERROR: Ya tienes un registro de compra. Límite: 1.";
-        }
-        Usuario vendedor = producto.getVENDEDOR();
-        if (vendedor.historicoVenta != null) {
-            return "ERROR: El vendedor ya tiene un registro de venta. Límite: 1.";
-        }
-
-        producto.setComprador(comprador);
-        String fecha = LocalDate.now().toString();
-        Transaccion registroVenta = new Transaccion(precioFinal, comprador.getEmail(), puntuacion, comentario, fecha);
-        vendedor.agregarVenta(registroVenta);
-        Transaccion registroCompra = new Transaccion(precioFinal, vendedor.getEmail(), puntuacion, comentario, fecha);
-        comprador.agregarCompra(registroCompra);
-        if (vendedor.getP1() == producto) vendedor.eliminarProducto("1");
-        else if (vendedor.getP2() == producto) vendedor.eliminarProducto("2");
-        return String.format("COMPRA EXITOSA: Has comprado '%s' por %.2f€.", producto.getNombre(), precioFinal);
+    public boolean usuariosIguales(Usuario usuario, Productos productos){
+        return usuario == productos.getVENDEDOR();
     }
-
+    public Usuario buscarUser(Usuario usuario,Productos producto){
+        if (usuariosIguales(usuario,producto)) return null;
+        if (u1 == producto.getVENDEDOR()) return u1;
+        if (u2 == producto.getVENDEDOR()) return u2;
+        return null;
+    }
+    public Usuario buscarUser(Productos productos){
+        return productos.getVENDEDOR();
+    }
+    public void aniadirTransaccionVendedor(Productos productos, Transaccion transaccion){
+        Usuario usuario = buscarUser(productos);
+        if (usuario == u1) u1.setUltimaVenta(transaccion);
+        else if (usuario == u2) u2.setUltimaVenta(transaccion);
+    }
+    public void setVendedorProducto(Usuario usuario,Productos productos){
+        productos.setComprador(usuario);
+    }
+    public boolean puedeComprarse(Productos productos){
+        return productos.getComprador() == null;
+    }
 
     @Override
     public String toString() {
@@ -91,10 +119,17 @@ public class Fernanpop {
                 ", u2=" + u2 +
                 '}';
     }
-    public String pintaTodosLosProductos(){
+    public String pintaTodosLosProductos(Usuario uTemp){
         String resultado = "";
-        resultado += u1.pintaProductos();
-        resultado += u2.pintaProductos();
+        if (uTemp == u1){
+            resultado += u2.pintaProductos(1);
+            resultado += u1.pintaProductos(Usuario.getCont());
+        } else {
+            resultado += u1.pintaProductos(1);
+            resultado += u2.pintaProductos(Usuario.getCont());
+        }
+        if (Usuario.getCont() == 1) resultado += "No hay productos a la venta";
         return resultado;
     }
 }
+

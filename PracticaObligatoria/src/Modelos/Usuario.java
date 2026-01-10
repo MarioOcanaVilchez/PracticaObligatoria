@@ -9,9 +9,10 @@ public class Usuario {
     private Productos p1;
     private Productos p2;
     private int contProductosEnVenta;
-    Transaccion historicoVenta;
-    Transaccion historicoCompra;
-    //Getters y Setters
+    private static int cont;
+    private Transaccion ultimaVenta;
+    private Transaccion ultimaCompra;
+//Getters y Setters
     public String getEmail() {
         return email;
     }
@@ -40,21 +41,31 @@ public class Usuario {
         return p1;
     }
 
-    public void setP1(Productos p1) {
-        this.p1 = p1;
-    }
 
     public Productos getP2() {
         return p2;
     }
 
-    public void setP2(Productos p2) {
-        this.p2 = p2;
+    public static int getCont() {
+        return cont;
     }
 
-    public int getId() {
-        return id;
+    public Transaccion getUltimaVenta() {
+        return ultimaVenta;
     }
+
+    public void setUltimaVenta(Transaccion ultimaVenta) {
+        this.ultimaVenta = ultimaVenta;
+    }
+
+    public Transaccion getUltimaCompra() {
+        return ultimaCompra;
+    }
+
+    public void setUltimaCompra(Transaccion ultimaCompra) {
+        this.ultimaCompra = ultimaCompra;
+    }
+
     //Constructor
     public Usuario(String email, String clave, String nombre) {
         this.email = email;
@@ -65,8 +76,7 @@ public class Usuario {
         id = contadorUsuarios;
         p1 = null;
         p2 = null;
-        this.historicoVenta = null;
-        this.historicoCompra = null;
+        cont = 0;
     }
 
     public static int getContadorUsuarios() {
@@ -74,9 +84,6 @@ public class Usuario {
     }
 
     //Otros metodos
-    public boolean validarUsuario(String usuario,String clave){
-        return email.equals(usuario) && this.clave.equals(clave);
-    }
     public static boolean validarUsuario(String usuario){
         for (int i = 0; i < usuario.length(); i++) {
             if (usuario.charAt(i) == '@') return true;
@@ -86,22 +93,18 @@ public class Usuario {
     public boolean validarExistenciaCorreo(String correo){
         return correo.equals(this.email);
     }
-
     public boolean validarConfirmacionDeClave(String clave,String claveConf){
         return clave.equals(claveConf) && !clave.equals(this.clave);
     }
     public boolean validarExistenciaClave(String clave){
         return clave.equals(this.clave);
     }
-
     public boolean validarExistenciaNombre(String nombre){
         return nombre.equals(this.nombre);
     }
-
     public boolean cojeProducto(){
         return p1 == null || p2 == null;
     }
-
     public void crearProducto(String nombre, String descripcion, double precio,Usuario utemp ){
         if (p1 == null) {
             p1 = new Productos(nombre, descripcion, precio, utemp);
@@ -111,17 +114,19 @@ public class Usuario {
             contProductosEnVenta++;
         }
     }
-
     public boolean hayProductosEnVenta(){
         return contProductosEnVenta > 0;
     }
-
     public boolean eliminarProducto(String num){
         switch (num){
             case "1":
                 if (p1 != null) {
                     p1 = null;
                     contProductosEnVenta--;
+                    if (p2 != null){
+                        p1 = p2;
+                        p2 = null;
+                    }
                     return true;
                 }
                 break;
@@ -136,25 +141,24 @@ public class Usuario {
         }
         return false;
     }
-
-    public void agregarVenta(Transaccion venta) {
-        if (this.historicoVenta == null) this.historicoVenta = venta;
+    public static double validarPuntuacion(String puntuacionSinValidar){
+        double puntuacion = -1;
+        boolean punto = false;
+        int caracterValido = 0;
+        for (int i = 0; i < puntuacionSinValidar.length(); i++) {
+            if (Character.isDigit(puntuacionSinValidar.charAt(i))) caracterValido++;
+            else if (puntuacionSinValidar.charAt(i) == '.' && !punto){
+                caracterValido++;
+                punto = true;
+            }
+        }
+        if (caracterValido == puntuacionSinValidar.length()) puntuacion = Double.parseDouble(puntuacionSinValidar);
+       if (puntuacion >= 0 && puntuacion <= 5) return puntuacion;
+       return -1;
     }
 
-    public void agregarCompra(Transaccion compra) {
-        if (this.historicoCompra == null) this.historicoCompra = compra;
-    }
-
-    public String pintaHistoricoVentas() {
-        if (historicoVenta != null) return "--- Histórico de Ventas ---\n" + historicoVenta.toString();
-        else return "No hay ventas registradas en el histórico.";
-    }
-
-    public String pintaHistoricoCompras() {
-        if (historicoCompra != null) return "--- Histórico de Compras ---\n" + historicoCompra.toString();
-        return "No hay compras registradas en el histórico.";
-    }
-
+    //toString Provisional
+    //En el futuro se mejorara
     @Override
     public String toString() {
         String info = String.format(
@@ -166,34 +170,34 @@ public class Usuario {
                 this.nombre, this.id, this.email, this.nombre
         );
 
-        // Añadimos los productos en venta de forma estructurada
         info += "\n--- PRODUCTOS EN VENTA ---\n";
-        if (contProductosEnVenta == 0) {
+        if (!hayProductosEnVenta()) {
             info += "  (Ningún producto activo en venta)\n";
         } else {
-            // Llama a pintaProductos() para listar p1 y p2
-            info += pintaProductos();
+            info += pintaProductos(1);
         }
         info += "--------------------------------------------------";
 
-        // NOTA: Para no sobrecargar el perfil, no incluiremos aquí los historicosVenta/Compra,
-        // ya que tienen su propia opción de menú (7 y 8).
 
         return info;
     }
-
-    public String pintaProductos(){
+    public String pintaProductos(int numEmpieza){
         String resultado = "";
-        if (p1 != null)  resultado += p1;
-        if (p2 != null)  resultado += p2;
+        if (p1 != null && p1.getComprador() == null){
+            resultado +=numEmpieza + ". " + p1.getNombre() + " " + p1.getPrecio() + "€" + "\n";
+            numEmpieza++;
+        }
+        if (p2 != null && p2.getComprador() == null){
+            resultado +=numEmpieza + ". " + p2.getNombre() + " " + p2.getPrecio() + "€" + "\n";
+            numEmpieza++;
+        }
+        cont = numEmpieza;
         return resultado;
     }
-
-    public String pintaResumenProductos(){
+    public String pintaDatosProductos(){
         String resultado = "";
-        if (p1 != null)  resultado += p1.pintaResumen() + "\n";
-        if (p2 != null)  resultado += p2.pintaResumen() + "\n";
+        if (p1 != null) resultado += p1;
+        if (p2 != null) resultado += p2;
         return resultado;
     }
 }
-

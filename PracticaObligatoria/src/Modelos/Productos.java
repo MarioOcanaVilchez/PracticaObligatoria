@@ -8,47 +8,13 @@ public class Productos {
     private static int numProductos = 0;
     private final Usuario VENDEDOR;
     private Usuario comprador;
-    private boolean vendido = false;
-
-    //Getters y Setters
+//Getters y Setters
     public String getNombre() {
         return nombre;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-    public String getDescripcion() {
-        return descripcion;
-    }
-
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
-    }
-
     public double getPrecio() {
         return precio;
-    }
-
-    public void setPrecio(double precio) {
-        this.precio = precio;
-    }
-
-    public int getIdProducto() {
-        return idProducto;
-    }
-
-    public static int getNumProductos() {
-        return numProductos;
-    }
-
-    public static void setNumProductos(int numProductos) {
-        Productos.numProductos = numProductos;
-    }
-
-    public Usuario getVENDEDOR() {
-        return VENDEDOR;
     }
 
     public Usuario getComprador() {
@@ -59,8 +25,8 @@ public class Productos {
         this.comprador = comprador;
     }
 
-    public void setVendido(boolean vendido) {
-        this.vendido = vendido;
+    public Usuario getVENDEDOR() {
+        return VENDEDOR;
     }
 
     //Constructor
@@ -71,7 +37,6 @@ public class Productos {
         numProductos++;
         idProducto = numProductos;
         this.VENDEDOR = vendedor;
-        this.comprador = null;
     }
     public static boolean validarPrecio(String precioSinValidar){
         int caracterValido = 0;
@@ -84,14 +49,6 @@ public class Productos {
             }
         }
         return caracterValido == precioSinValidar.length();
-    }
-
-    public boolean isVendido() {
-        return vendido;
-    }
-
-    public String pintaResumen() {
-        return String.format("  [%d] %s: %.2f€", this.idProducto, this.nombre, this.precio);
     }
 
     @Override
@@ -109,11 +66,11 @@ public class Productos {
                 this.descripcion, this.VENDEDOR.getNombre(), this.VENDEDOR.getEmail()
         );
 
+        // Si está vendido, incluimos el comprador (asumiendo que tiene getters)
         if (comprador != null) {
             info += String.format("  Comprador: %s (Email: %s)\n", comprador.getNombre(), comprador.getEmail());
         }
+
         return info;
     }
-
 }
-
