@@ -38,6 +38,8 @@ Para poder ejecutar la aplicación es necesario tener instalado el **Java SE Dev
 
 Al iniciar la aplicación, se te preguntará si deseas usar un **MOCK** (Datos de prueba).
 
+<img width="420" height="68" alt="image" src="https://github.com/user-attachments/assets/0aed8d68-f3e9-48cc-945d-a54ca41295e7" />
+
 * Un **MOCK** utiliza usuarios y objetos predefinidos para probar el funcionamiento de la aplicación sin afectar datos reales.
 * Los datos del MOCK se **restablecen** cada vez que se inicia la aplicación.
 * **Usuarios de Prueba:**
@@ -45,7 +47,7 @@ Al iniciar la aplicación, se te preguntará si deseas usar un **MOCK** (Datos d
     * `Prueba2@`, `1234`, `Sujeto de pruebas2`
     * **Objeto Creado:** Gafas de sol.
 
-<img width="420" height="68" alt="image" src="https://github.com/user-attachments/assets/0aed8d68-f3e9-48cc-945d-a54ca41295e7" />
+
 
 ### Flujo de la Aplicación (Sin MOCK)
 
