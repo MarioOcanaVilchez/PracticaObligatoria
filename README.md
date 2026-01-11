@@ -109,7 +109,7 @@ Muestra tus datos personales y una lista de los artículos que tienes actualment
 
 Permite cambiar la información asociada a tu cuenta.
 
- **Nota:** Si el nuevo dato es igual al antiguo se muestra un mensaje de error.
+> **Nota:** Si el nuevo dato es igual al antiguo se muestra un mensaje de error.
 
 <img width="696" height="474" alt="image" src="https://github.com/user-attachments/assets/6b16b793-8592-4873-a97c-05ab5816d85a" />
 
