@@ -9,6 +9,7 @@
 1.  [Resumen de la Aplicación](#1-resumen-de-la-aplicación)
 2.  [Funcionamiento de la Aplicación](#2-funcionamiento-de-la-aplicación)
     * [Requisito Previo](#requisito-previo)
+    * [Iniciar aplicación](#iniciar-aplicación)
     * [Modo MOCK (Prueba)](#modo-mock-prueba)
     * [Flujo de la Aplicación](#flujo-de-la-aplicación)
     * [Menú de Usuario](#menú-de-usuario)
@@ -33,6 +34,13 @@ Para poder ejecutar la aplicación es necesario tener instalado el **Java SE Dev
 
 * **Enlace de Descarga (Windows x64):**
     `https://download.oracle.com/java/25/latest/jdk-25_windows-x64_bin.exe`
+
+### Iniciar aplicación
+
+Para iniciar la aplicación debes:
+* Descargar el archivo comprimido **Ejecutable.zip**
+* Entrar en el archivo y arrastrar afuera la carpeta con el nombre **Ejecutable**
+* Entrar en la carpeta y ejecutar FernanPop, puede que salgan alertas de seguridad pero no se preocupe el programa es seguro
 
 ### Modo MOCK (Prueba)
 
