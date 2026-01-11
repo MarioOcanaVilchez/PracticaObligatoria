@@ -149,7 +149,7 @@ Muestra el listado completo de productos disponibles para la venta.
 * **Histórico de Ventas:**
     <img width="692" height="330" alt="image" src="https://github.com/user-attachments/assets/afde4e70-d863-4f22-aec3-d9cefdcafcce" />
 * **Histórico de Compras:**
-    <img width="689" height="448" alt="image" src="https://github.com/user-attachments/assets/c4e82316-ad35-4f22-aec3-d9cefdcafcce" />
+    <img width="689" height="448" alt="Captura de pantalla 2026-01-11 173406" src="https://github.com/user-attachments/assets/9a4d2d7b-d070-4c01-bbf9-8a439fdacf23" />
 
 ---
 
