@@ -105,7 +105,7 @@ public class Fernanpop {
         if (usuario == u1) u1.setUltimaVenta(transaccion);
         else if (usuario == u2) u2.setUltimaVenta(transaccion);
     }
-    public void setVendedorProducto(Usuario usuario,Productos productos){
+    public void setCompradorProducto(Usuario usuario,Productos productos){
         productos.setComprador(usuario);
     }
     public boolean puedeComprarse(Productos productos){

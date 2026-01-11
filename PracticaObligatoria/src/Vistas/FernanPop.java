@@ -232,7 +232,7 @@ public class FernanPop {
                                                                 transaccion = new Transaccion(comentario, puntuacion, uTemp, fernanpop.buscarProducto(uTemp, opCompra));
                                                                 uTemp.setUltimaCompra(transaccion);
                                                                 fernanpop.aniadirTransaccionVendedor(fernanpop.buscarProducto(uTemp, opCompra), transaccion);
-                                                                fernanpop.setVendedorProducto(uTemp, fernanpop.buscarProducto(uTemp, opCompra));
+                                                                fernanpop.setCompradorProducto(uTemp, fernanpop.buscarProducto(uTemp, opCompra));
                                                                 System.out.println("Operación realizada con éxito");
                                                             }
                                                         }
