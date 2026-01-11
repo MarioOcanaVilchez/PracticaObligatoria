@@ -1,9 +1,9 @@
 # Fernanpop
+<img width="420" height="68" alt="Gemini_Generated_Image_f67qm6f67qm6f67q" src="https://github.com/user-attachments/assets/25a8746a-75f7-4dd9-a9f1-9def31e43d90" />
 Indice:
 1. Resumen de la aplicación
 2. Funcionamiento de la aplicación
 3. Tarifas
-<img width="420" height="68" alt="Gemini_Generated_Image_f67qm6f67qm6f67q" src="https://github.com/user-attachments/assets/25a8746a-75f7-4dd9-a9f1-9def31e43d90" />
 
 
 1. RESUMEN APLICACIÓN
@@ -38,7 +38,16 @@ Cuando hay objetos<img width="997" height="358" alt="image" src="https://github.
 Para eliminarlo de la venta habría que darle al numero que esta a la izquierda del objeto que queremos vender y si no queremos vender ninguno escribimos salir
 En la quinta nos permite poner a la venta un producto en el que nos pide el nombre del producto la descripción y el precio
 <img width="785" height="370" alt="image" src="https://github.com/user-attachments/assets/9310367b-22b6-491f-95d8-75e4920ae96b" />
-En la sexta nos permite ver todos los objetos que hay a la venta en la aplicación
+En la sexta nos permite ver todos los objetos que hay a la venta en la aplicación y comprarlos
+<img width="812" height="409" alt="image" src="https://github.com/user-attachments/assets/8111eaf1-4245-4451-9fbd-a264e29eb9ff" />
+Para salir de esta pestaña sin comprar nada hay que escribir salir
+Al comprarlos te pedira que escribas un comentario sobre el comprador y el producto y que lo califiques de 0 a 5
+<img width="1011" height="657" alt="image" src="https://github.com/user-attachments/assets/d3f4d4ed-eff7-4fae-98de-6139d1d1fc45" />
+Y si intentas comprar un producto creado por ti no te deja
+<img width="821" height="327" alt="image" src="https://github.com/user-attachments/assets/20a7efc2-63b7-46fa-a748-86c847dbb33e" />
+Las opciones 7 y 8 son para ver el historico de ventas y de compras
+<img width="692" height="330" alt="image" src="https://github.com/user-attachments/assets/afde4e70-d863-4f22-aec3-d9cefdcafcce" />
+<img width="689" height="448" alt="image" src="https://github.com/user-attachments/assets/c4e82316-ad35-44f8-9d8e-f19da40230ec" />
 
 
 
