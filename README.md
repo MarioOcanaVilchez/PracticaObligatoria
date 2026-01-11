@@ -66,7 +66,7 @@ Se te solicitarán:
 * **Clave (Contraseña)**
 * **Nombre de Usuario**
 
-> **Nota:** Si el correo o la clave ya están registrados por otro usuario, el sistema no permitirá el registro.
+> **Nota:** Si el correo ya están registrados por otro usuario, el sistema no permitirá el registro.
 
 <img width="630" height="236" alt="image" src="https://github.com/user-attachments/assets/d0cebd33-4867-4014-9d57-3131d2c037fe" />
 
@@ -108,6 +108,8 @@ Muestra tus datos personales y una lista de los artículos que tienes actualment
 #### 2. Modificar Datos Personales
 
 Permite cambiar la información asociada a tu cuenta.
+
+ **Nota:** Si el nuevo dato es igual al antiguo se muestra un mensaje de error.
 
 <img width="696" height="474" alt="image" src="https://github.com/user-attachments/assets/6b16b793-8592-4873-a97c-05ab5816d85a" />
 
