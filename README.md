@@ -124,7 +124,6 @@ Visualización de tus artículos activos.
 
 * Para eliminar un artículo, introduce el **número** que aparece a la izquierda del mismo.
 * Para cancelar la acción, escribe `salir`.
-* **Con objetos:**
     <img width="997" height="358" alt="image" src="https://github.com/user-attachments/assets/c03bf366-a6bb-4caa-8b13-f425e6f6a139" />
 
 #### 5. Poner Producto a la Venta
@@ -156,7 +155,12 @@ Muestra el listado completo de productos disponibles para la venta.
 
 ## 3. Tarifas
 
-*(Si tienes información sobre comisiones, costos o modelos de precios, puedes detallarlos aquí.)*
+Fernanpop ofrece dos modelos de monetización para adaptarse a tus necesidades de venta:
+
+| Plan | Tipo de Cobro | Descripción | Ideal Para |
+| :--- | :--- | :--- | :--- |
+| **Plan Básico (Mensualidad)** | **Cuota Fija Mensual** | Pagas 50€ independientemente del volumen de tus ventas. No se aplica comisión por transacción. | Vendedores con un volumen de ventas alto y constante. |
+| **Plan Comisión** | **Comisión por Venta** | Se retiene un porcentaje (X%) dependiendo del precio final de cada artículo vendido. No hay cuota mensual. | Vendedores ocasionales o aquellos que están empezando. |
 
 ---
 
