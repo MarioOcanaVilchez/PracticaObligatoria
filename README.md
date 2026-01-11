@@ -3,7 +3,7 @@ Indice:
 1. Resumen de la aplicación
 2. Funcionamiento de la aplicación
 3. Tarifas
-<img width="1024" height="1024" alt="image" src="https://github.com/user-attachments/assets/0544d254-b885-4fdc-abc0-d87d2920fe92" />
+<img width="420" height="68" alt="image" src="https://github.com/user-attachments/assets/0544d254-b885-4fdc-abc0-d87d2920fe92" />
 
 
 1. RESUMEN APLICACIÓN
