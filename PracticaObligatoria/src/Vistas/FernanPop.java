@@ -37,7 +37,7 @@ public class FernanPop {
         uTemp = null;
 
         //Animación de entrada a la app
-        //Utilidades.AnimacionIniciando();
+        Utilidades.AnimacionIniciando();
         //Menu para seleccionar el usuario
         do {
             do {
